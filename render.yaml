@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: tgdb-api
+    runtime: docker
+    plan: starter              # ⚠️ free tier me disk NAHI milega
+    region: singapore          # India ke paas
+    healthCheckPath: /health
+    disk:
+      name: tgdb-data
+      mountPath: /data         # ⚠️ persistent disk (paid feature)
+      sizeGB: 20
+    envVars:
+      - key: CACHE_DIR
+        value: /data/tgdb_cache
