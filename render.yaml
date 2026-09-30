@@ -1,14 +1,20 @@
 services:
   - type: web
-    name: tgdb-api
-    runtime: docker
-    plan: starter              # ⚠️ free tier me disk NAHI milega
-    region: singapore          # India ke paas
+    name: icmr-phone-lookup
+    runtime: python
+    plan: starter        # $7/mo — free tier OOM karega
+    region: singapore    # India ke paas
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
     healthCheckPath: /health
-    disk:
-      name: tgdb-data
-      mountPath: /data         # ⚠️ persistent disk (paid feature)
-      sizeGB: 20
     envVars:
-      - key: CACHE_DIR
-        value: /data/tgdb_cache
+      - key: HF_TOKEN
+        sync: false      # Render dashboard me manually daalo
+      - key: SOURCE_REPO
+        value: mukeshcmdbrowser/icrm-hitek-fulldb
+      - key: INDEX_REPO
+        value: Bhatiasab/icmr-phone-locator-private
+      - key: LEADING_DIGITS
+        value: "9"
+      - key: PYTHON_VERSION
+        value: "3.11.9"
